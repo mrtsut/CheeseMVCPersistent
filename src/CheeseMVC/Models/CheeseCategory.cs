@@ -8,7 +8,7 @@ namespace CheeseMVC.Models
     public class CheeseCategory
     {
         //Add ID and Name Property
-        public string name { get; set; }
+        public string Name { get; set; }
         public int ID { get; set; }   
 
     }
