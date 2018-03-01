@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CheeseMVC.ViewModels;
 using CheeseMVC.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CheeseMVC.Controllers
 {
@@ -19,14 +20,25 @@ namespace CheeseMVC.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List<Cheese> cheeses = context.Cheeses.ToList();
+            // When each object is retrieced from the database, its Category is retrieved as well
+            IList<Cheese> cheeses = context.Cheeses.Include(c => c.Category).ToList();
+
+
+            //old code backup----
+           // List<Cheese> cheeses = context.Cheeses.ToList();
 
             return View(cheeses);
         }
 
         public IActionResult Add()
         {
-            AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
+
+            var theCollection = context.Categories.ToList();
+            AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel(theCollection);
+
+            // code backup ---
+            //AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
+
             return View(addCheeseViewModel);
         }
 
@@ -36,11 +48,15 @@ namespace CheeseMVC.Controllers
             if (ModelState.IsValid)
             {
                 // Add the new cheese to my existing cheeses
+
+                //this will fetch a single CheeseCategory object, with ID matching the CategorID value selected
+                CheeseCategory newcheeseCategory = context.Categories.Single(c => c.ID == addCheeseViewModel.CategoryID);
+               
                 Cheese newCheese = new Cheese
                 {
                     Name = addCheeseViewModel.Name,
                     Description = addCheeseViewModel.Description,
-                    Type = addCheeseViewModel.Type
+                    Category = newcheeseCategory
                 };
 
                 context.Cheeses.Add(newCheese);
