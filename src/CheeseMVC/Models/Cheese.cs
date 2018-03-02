@@ -11,5 +11,7 @@ namespace CheeseMVC.Models
         public CheeseCategory Category { get; set; }
         
         public int ID { get; set; }
+
+        public IList<CheeseMenu> CheeseMenus { get; set; }  //collection of type IList that holds Cheese Menu Objects
     }
 }
