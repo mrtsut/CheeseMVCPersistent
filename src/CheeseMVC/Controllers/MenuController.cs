@@ -23,6 +23,7 @@ namespace CheeseMVC.Controllers
         // GET: Menu
         public IActionResult Index()
         {
+            ViewBag.title = "Cheese Menu";
             IList<Menu> menus = context.Menus.ToList();
             return View(menus);
         }

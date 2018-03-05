@@ -20,6 +20,7 @@ namespace CheeseMVC.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewBag.title = "Cheese Menu";
             // When each object is retrieced from the database, its Category is retrieved as well
             IList<Cheese> cheeses = context.Cheeses.Include(c => c.Category).ToList();
 
@@ -32,7 +33,7 @@ namespace CheeseMVC.Controllers
 
         public IActionResult Add()
         {
-
+            ViewBag.title = "Add Cheese";
             var theCollection = context.Categories.ToList();
             AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel(theCollection);
 

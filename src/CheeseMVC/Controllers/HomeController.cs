@@ -10,6 +10,7 @@ namespace CheeseMVC.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.title = "Cheese Menu";
             return View();
         }
 
